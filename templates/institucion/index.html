@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block extrastatic %}
+    <link rel="stylesheet" href="{% static 'institucion/css/index.css'  %}">
+{% endblock %}
+
+{% block title %}
+    Index Institucion
+{% endblock %}
+
+{% block content %}
+
+    {% if institucion %}
+        {% for item in institucion %}
+        <div class="info-card">
+            <div class="card-img">
+                {% if item.icono %}
+                    <img src="{{ item.icono.url }}" alt="icon">
+                {% endif %}
+            </div>
+            <div class="card-data">
+                <h5 class="card-data-title">{{ item.nombre }}</h5>
+                <div class="card-data-row">{{ item.direccion }}</div>
+                <div class="card-data-row">{{ item.telefono1 }} - {{ item.telefono2 }}</div>
+                <div class="card-data-row">{{ item.email }}</div>
+                {% if item.icono %}
+                    <div class="card-data-row">{{ item.icono.url }}</div>
+                {% endif %}
+                <div class="card-data-btn">
+                    <a href="{% url 'institucion:edit_info' item.id %}" class="btn btn-success">Editar info</a>
+                    <a href="{% url 'institucion:delete_info' item.id %}" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h2>Este es el index de la institución</h2>
+        <h5>La institución no ha sido registrada. Puedes registrarla <a href="{% url 'institucion:add_info' %}">aquí</a></h5>
+    {% endif %}
+
+{% endblock %}

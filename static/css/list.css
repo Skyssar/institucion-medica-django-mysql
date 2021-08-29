@@ -1,0 +1,16 @@
+.table-title{
+    padding-bottom: 15px;
+    background: #435d7d;
+    color: white;
+    padding: 10px 15px;
+    min-width: 100%;
+    border-radius: 3px 3px 0 0;
+    display: flex;
+    justify-content:space-between;
+}
+
+.title{
+    display: flex;
+    align-items: center;
+    font-size: large;
+}

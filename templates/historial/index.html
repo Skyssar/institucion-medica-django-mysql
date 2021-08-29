@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <form class="form-inline" action="{% url 'historial:view_historial' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="search" class="sr-only">Buscar paciente</label>
+            <input type="number" class="form-control" id="search" name="search" placeholder="No. Documento">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+
+    </form>
+{% endblock %}

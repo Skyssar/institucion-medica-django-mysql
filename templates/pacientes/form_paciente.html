@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block extrastatic %}
+    <link href="{% static 'css/bootstrap/bootstrap-datepicker.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h2>Datos del paciente &raquo; {% if edit %} Editar {% else %} Nuevo {% endif %} registro</h2>
+    <hr />
+
+    <form class="form-horizontal" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.nombres.label }}</label>
+            <div class="col-sm-3">
+                {{ form.nombres }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.apellidos.label }}</label>
+            <div class="col-sm-3">
+                {{ form.apellidos }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.tipo_documento.label }}</label>
+            <div class="col-sm-3">
+                {{ form.tipo_documento }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.num_documento.label }}</label>
+            <div class="col-sm-3">
+                {{ form.num_documento }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.direccion.label }}</label>
+            <div class="col-sm-3">
+                {{ form.direccion }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.email.label }}</label>
+            <div class="col-sm-3">
+                {{ form.email }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.celular.label }}</label>
+            <div class="col-sm-3">
+                {{ form.celular }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.referencia_nombre.label }}</label>
+            <div class="col-sm-3">
+                {{ form.referencia_nombre }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{ form.referencia_celular.label }}</label>
+            <div class="col-sm-3">
+                {{ form.referencia_celular}}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">&nbsp;</label>
+            <div class="col-sm-6">
+                <input type="submit" class="btn btn-sm btn-primary" value="Guardar datos">
+                <a href="{% url 'pacientes:list_paciente' %}" class="btn btn-sm btn-danger">Cancelar</a>
+            </div>
+        </div>
+    </form>
+
+    <script src="{% static 'js/bootstrap/bootstrap-datepicker.js' %}"></script>
+	<script>
+	$('.date').datepicker({
+		format: 'dd-mm-yyyy',
+	})
+	</script>
+
+{% endblock %}

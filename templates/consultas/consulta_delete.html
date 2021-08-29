@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <h4>¿Está usted seguro de eliminar el registro de {{ consulta.paciente }} {{ consulta.fecha }}?</h4>
+    <p>Esta acción no se puede deshacer</p>
+    <button class="btn btn-danger" type="submit">SIUUUUU</button>
+    <a class="btn btn-primary" href="{% url 'medicos:list_consulta' %}">No perro!</a>
+
+</form>
+{% endblock %}

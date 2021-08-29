@@ -1,0 +1,150 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h1>Historial médico</h1>
+    <!-- Formulario para buscar el paciente por No. Documento -->
+    <form class="form-inline" action="{% url 'historial:view_historial' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="tipoDocumento" class="sr-only">Tipo de Documento</label>
+            {% if tipos_documento %}
+                <select name="tipoDocumento" id="tipoDocumento" class="form-control" required>
+                    {% if busqueda %}
+                        <option value="" disabled>Seleccione</option>
+                        {% for item in tipos_documento %}
+                            <!-- '|add:"0"' fuerza a un str a int -->
+                            {% if busqueda.tipo_documento|add:"0" == item.id %} 
+                                <option value="{{ item.id }}" selected>{{ item.tipo }}</option>
+                            {% else %}
+                                <option value="{{ item.id }}">{{ item.tipo }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="" disabled selected>Seleccione</option>
+                        {% for item in tipos_documento %}
+                            <option value="{{ item.id }}">{{ item.tipo }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            {% endif %}
+
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="numDocumento" class="sr-only">Buscar paciente</label>
+            <input type="number" value="{{ busqueda.num_documento }}" class="form-control" id="numDocumento" name="numDocumento" placeholder="No. Documento" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+
+    </form>
+    <hr />
+
+    {% if busqueda %}
+        {% if encontrado %}
+            {% for item in paciente %}
+                <p>Paciente: {{ item.nombres }} {{ item.apellidos }}</p>
+                <p>{{ item.tipo_documento }}: {{ item.num_documento }}</p>
+            {% endfor %}
+
+            <div class="table-title">
+                <div class="title">
+                    <b>Historial de consultas</b>
+                </div>
+            </div>
+        
+            {% if consultas %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Fecha</th>
+                            <th>Paciente</th>
+                            <th>Médico</th>
+                            <th>Descripción</th>
+                            <th>Observaciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        
+                        {% for consulta in consultas %}
+                            <tr>
+                                <td>{{ consulta.id }}</td>
+                                <td>{{ consulta.fecha }}</td>
+                                <td>{{ consulta.paciente.num_documento }}</td>
+                                <td>{{ consulta.medico }}</td>
+                                <td>{{ consulta.descripcion }}</td>
+                                <td>{{ consulta.observaciones }}</td>
+                                
+                                <!-- <td>
+                                    <a class="btn btn-primary" href="{% url 'medicos:edit_consulta' consulta.id %}">Editar</a>
+                                    <a class="btn btn-danger" href="{% url 'medicos:delete_consulta' consulta.id %}">Eliminar</a>
+                                </td> -->
+        
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <h5>El paciente no tiene consultas registradas</h5>
+                {% endif %}
+        
+                <div class="table-title">
+                    <div class="title">
+                        <b>Historial de procedimientos</b>
+                    </div>
+                </div>
+            
+                {% if procedimientos %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Fecha</th>
+                                <th>Paciente</th>
+                                <th>Médico</th>
+                                <th>Descripción</th>
+                                <th>Observaciones</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            
+                            {% for procedimiento in procedimientos %}
+                                <tr>
+                                    <td>{{ procedimiento.id }}</td>
+                                    <td>{{ procedimiento.fecha }}</td>
+                                    <td>{{ procedimiento.paciente.num_documento }}</td>
+                                    <td>{{ procedimiento.medico }}</td>
+                                    <td>{{ procedimiento.descripcion }}</td>
+                                    <td>{{ procedimiento.observaciones }}</td>
+                                    
+                                    <!-- <td>
+                                        <a class="btn btn-primary" href="{% url 'medicos:edit_procedimiento' procedimiento.id %}">Editar</a>
+                                        <a class="btn btn-danger" href="{% url 'medicos:delete_procedimiento' procedimiento.id %}">Eliminar</a>
+                                    </td> -->
+            
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h5>El paciente no tiene procedimientos registrados</h5>
+                {% endif %}
+                
+
+        {% else %}
+            <p>No existe el paciente buscado</p>
+        {% endif %}
+
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="table-title">
+        <div class="title">
+            <b>Lista de consultas</b>
+        </div>
+        <div class="btn">
+            <a href="{% url 'medicos:add_consulta' %}" class="btn btn-success"><span>Nuevo</span></a>
+        </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Fecha</th>
+            <th>Paciente</th>
+            <th>Médico</th>
+            <th>Descripción</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if consultas %}
+            {% for consulta in consultas %}
+            <tr>
+                <td>{{ consulta.id }}</td>
+                <td>{{ consulta.fecha }}</td>
+                <td>{{ consulta.paciente }}</td>
+                <td>{{ consulta.medico }}</td>
+                <td>{{ consulta.descripcion }}</td>
+                <td>{{ consulta.observaciones }}</td>
+                
+                <td>
+                    <a class="btn btn-primary" href="{% url 'medicos:edit_consulta' consulta.id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'medicos:delete_consulta' consulta.id %}">Eliminar</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        {% else %}
+            <h3>There is no data in DB</h3>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

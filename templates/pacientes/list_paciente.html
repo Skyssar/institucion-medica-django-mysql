@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block extrastatic %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="table-title">
+        <div class="title">
+            <b>Lista de pacientes</b>
+        </div>
+        <div class="btn">
+            <a href="{% url 'pacientes:add_paciente' %}" class="btn btn-success"><span>Nuevo</span></a>
+        </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Tipo de documento</th>
+            <th>No. Documento</th>
+            <th>Dirección</th>
+            <th>Email</th>
+            <th>Celular</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if pacientes %}
+            {% for paciente in pacientes %}
+            <tr>
+                <td>{{ paciente.id }}</td>
+                <td>{{ paciente.nombres }}</td>
+                <td>{{ paciente.apellidos }}</td>
+                <td>{{ paciente.tipo_documento }}</td>
+                <td>{{ paciente.num_documento }}</td>
+                <td>{{ paciente.direccion }}</td>
+                <td>{{ paciente.email }}</td>
+                <td>{{ paciente.celular }}</td>
+                
+                <td>
+                    <a class="btn btn-primary" href="{% url 'pacientes:edit_paciente' paciente.id %}">Editar</a>
+                    <a class="btn btn-danger" href="{% url 'pacientes:delete_paciente' paciente.id %}">Eliminar</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        {% else %}
+            <h3>There is no data in DB</h3>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}
