@@ -1,7 +1,7 @@
 # institucion-medica-django-mysql
 Proyecto perteneciente al Servicio Geológico Colombiano. 
 
-## DESCRIPCION
+## DESCRIPCIÓN
 
 Una institución medica requiere dar seguimiento a sus pacientes, los procedimientos que se les han practicado y los medicamentos que les han suministrado. Para tal fin, se solicita implementar los siguientes módulos:
 
